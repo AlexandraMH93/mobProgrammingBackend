@@ -11,7 +11,7 @@ const dbSync = require('./db/sync.js')
 const dbCheck = async () => {
     try {
         await sequelize.authenticate()
-        //await dbSync()
+        await dbSync()
         console.log('Connected to Guaguas DB')
     } catch (error) {
         throw new Error(error)
