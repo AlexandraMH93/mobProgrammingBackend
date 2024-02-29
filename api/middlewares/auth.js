@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const User = require('./../models/user')
 
 const checkAuth = (req, res, next) => {
-    if (req.headers.authorization) return res.status(401).send('Unauthorized') 
+    if (!req.headers.authorization) return res.status(401).send('Unauthorized') 
 
     jwt.verify(req.headers.authorization, process.env.JWT_SECRET, async (err, payload) => {
         try { //ponemos el try en la funcion callback
@@ -20,8 +20,14 @@ const checkAuth = (req, res, next) => {
             console.log(error)
             res.status(500).send('Error on auth')
         }
-        
     })
 }
 
-module.exports = { checkAuth }
+const checkAdmin = (req, res, next) => {
+    if(res.locals.user.role !== 'admin') return res.status(401).send('User not authorized') //si no eres admin no puedes crear una ruta
+    else{
+        next()
+    }
+}
+
+module.exports = { checkAuth, checkAdmin }

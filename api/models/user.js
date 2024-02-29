@@ -18,7 +18,7 @@ const User = sequelize.define('user', {
         type: DataTypes.STRING,
         defaultValue: 'user',
         validate: {
-            isIn: (undefined, 'admin', 'user')
+            isIn: [[undefined, 'admin', 'user']]
         }
     }
 })

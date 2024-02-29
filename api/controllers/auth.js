@@ -8,7 +8,7 @@ const signup = async (req, res) => {
         req.body.password = bcyrypt.hashSync(req.body.password, salt)
 
         const user = await User.create(req.body)
-
+        console.log(user)
         const token = jwt.sign( //crear el token
             { email: user.email }, //identifica al usuario como unico
             process.env.JWT_SECRET, //secret
